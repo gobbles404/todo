@@ -82,3 +82,13 @@ app.delete('/todo/:id', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+app.get('/todos', async (req, res) => {
+    try {
+        const todos = await Todo.find({ completed: false });
+        res.json(todos);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});

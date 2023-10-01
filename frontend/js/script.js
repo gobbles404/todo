@@ -1,4 +1,6 @@
 console.log('js is working');
+window.addEventListener('load', fetchTodos);
+
 
 // script.js
 document.getElementById('create-todo-form').addEventListener('submit', function(e) {
@@ -107,6 +109,17 @@ function deleteTodo(todoId) {
     .then(deletedTask => {
         const li = document.querySelector(`[data-id="${todoId}"]`);
         li.remove();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function fetchTodos() {
+    fetch('http://localhost:3001/todos')
+    .then(response => response.json())
+    .then(todos => {
+        todos.forEach(todo => {
+            createNewTaskItem(todo);
+        });
     })
     .catch(error => console.error('Error:', error));
 }
