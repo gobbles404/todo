@@ -1,8 +1,11 @@
+
+// feels like python imports
 const express = require('express');
 const connectDB = require('./db');
 
+// feels like creating an instance of a class
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 connectDB();
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="page-container">
+    <header>
+      <h1>ToDo App</h1>
+    </header>
+    <main>
+      <div id="todo-creator">
+        <h3>Todo Creation</h3>
+        <form id="create-todo-form">
+          <label for="todo-input">Enter your todo:</label>
+          <input type="text" id="todo-input" name="todo" required placeholder="ex: feed cat">
+          <button type="submit">Create Todo</button>
+        </form>
+      </div>
+      <div id="todo-viewer">
+        <h3>Todo Viewer</h3>
+        <ul id="todo-list">
+          <!-- list item, todo text, complete button, delete button -->
+        </ul>
+      </div>
+    </main>
+    <footer>
+      Footer Stuff
+    </footer>
+    <script src="js/script.js"></script>
+  </div>
+</body>
+</html>
