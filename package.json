@@ -1,0 +1,38 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "1. Create a simple todo application     1. User can add, remove and mark a todo as complete     2. If marked as complete, the todo item will be strikethrough     3. The todo items should be stored in a backend     4. The frontend has to be done in vanilla Javascript (no library or frameworks). The backend is your choice. Should be a REST API 2. Project deadline is Sept 5th 3. After 5th, book a meeting with me for our first mock interview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gobbles404/todo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gobbles404/todo/issues"
+  },
+  "homepage": "https://github.com/gobbles404/todo#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.1.0",
+    "mongoose": "^7.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.22.20",
+    "@babel/preset-react": "^7.22.15",
+    "babel-loader": "^9.1.3",
+    "nodemon": "^3.0.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
