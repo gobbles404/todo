@@ -1,8 +1,9 @@
-console.log('js is working');
-window.addEventListener('load', fetchTodos);
+window.onload = () => {
+    fetchTodos();
+    fetchCompletedTodos();
+};
 
 
-// script.js
 document.getElementById('create-todo-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const todoInput = document.getElementById('todo-input');  // Get the input element
@@ -24,25 +25,27 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
     return response.json();
   })
   .then(data => {
-    console.log('Success:', data);  // Log the data received from the server
+    console.log('Success adding', data.title, 'to db');
     createNewTaskItem(data);
     resetInput(todoInput);
   })
   .catch((error) => {
-      console.error('Error:', error);  // Log any errors
+      console.error('Error:', error);
   });
 });
 
 
 function resetInput(inputElement) {
+    console.log('Clearing todo input element');
     inputElement.placeholder = "ex: feed cat";
     inputElement.value = '';
 }
 
+
 // Define the function to create a new task item
 function createNewTaskItem(task) {
     // Create a new list item
-    console.log(task);
+    console.log('Adding open todo to frontend:', task.title);
     const li = document.createElement('li');
 
     li.dataset.id = task._id;
@@ -76,6 +79,26 @@ function createNewTaskItem(task) {
     document.getElementById('todo-list').appendChild(li);
 }
 
+function redoTodo(todoId) {
+    fetch(`http://localhost:3001/todo/${todoId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            completed: false,
+        }),
+    })
+    .then(response => response.json())
+    .then(updatedTask => {
+        const li = document.querySelector(`[data-id="${todoId}"]`);
+        const span = li.firstChild;
+        span.style.textDecoration = '';
+        // todo: move to active todos
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 function completeTodo(todoId) {
     fetch(`http://localhost:3001/todo/${todoId}`, {
         method: 'PATCH',
@@ -91,7 +114,7 @@ function completeTodo(todoId) {
         const li = document.querySelector(`[data-id="${todoId}"]`);
         const span = li.firstChild;
         span.style.textDecoration = 'line-through';
-        // todo: disable button or let user redo todo
+        // todo: move to completed?
     })
     .catch(error => console.error('Error:', error));
 }
@@ -122,4 +145,53 @@ function fetchTodos() {
         });
     })
     .catch(error => console.error('Error:', error));
+}
+
+function fetchCompletedTodos() {
+    fetch('http://localhost:3001/completed')
+        .then(response => response.json())
+        .then(completedTodos => {
+            completedTodos.forEach(todo => {
+                createCompletedTaskItem(todo);
+            });
+        })
+    .catch(error => console.error('Error:', error));
+}
+
+
+function createCompletedTaskItem(task) {
+    // Similar to your createNewTaskItem function, but for completed todos
+    const li = document.createElement('li');
+
+    const span = document.createElement('span');
+    li.dataset.id = task._id;
+    
+    span.textContent = task.title;
+    span.style.textDecoration = 'line-through';  // Since it's completed
+
+    // Create a button to mark the todo as incomplete
+    const redoButton = document.createElement('button');
+    redoButton.textContent = 'Redo';
+    redoButton.addEventListener('click', function() {
+        // Logic to mark the todo as complete
+        redoTodo(li.dataset.id);
+    }); 
+
+    // Create a button to delete the todo
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', function() {
+        // Logic to delete the todo
+        console.log(li.dataset.id);
+        deleteTodo(li.dataset.id);
+    });
+
+    // Append the span and buttons to the list item
+    li.appendChild(span);
+    li.appendChild(redoButton);
+    li.appendChild(deleteButton);
+
+    // ... rest of your code to create buttons, etc ...
+    const list = document.getElementById('completed-list');
+    list.appendChild(li);
 }

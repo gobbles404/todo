@@ -55,6 +55,7 @@ app.post('/create', async (req, res) => {
 });
 
 app.patch('/todo/:id', async (req, res) => {
+    console.log(req);
     try {
         // Find the todo item by id and update its completed status
         const todo = await Todo.findByIdAndUpdate(
@@ -87,6 +88,16 @@ app.get('/todos', async (req, res) => {
     try {
         const todos = await Todo.find({ completed: false });
         res.json(todos);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
+
+app.get('/completed', async (req, res) => {
+    try {
+        const completedTodos = await Todo.find({ completed: true });
+        res.json(completedTodos);
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
