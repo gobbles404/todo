@@ -21,10 +21,6 @@ app.use(cors({
     optionsSuccessStatus: 204,
 }));
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
@@ -86,18 +82,8 @@ app.delete('/todo/:id', async (req, res) => {
 
 app.get('/todos', async (req, res) => {
     try {
-        const todos = await Todo.find({ completed: false });
+        const todos = await Todo.find({});
         res.json(todos);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error');
-    }
-});
-
-app.get('/completed', async (req, res) => {
-    try {
-        const completedTodos = await Todo.find({ completed: true });
-        res.json(completedTodos);
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');

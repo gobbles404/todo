@@ -1,9 +1,9 @@
+// query backend for existing todos
 window.onload = () => {
     fetchTodos();
-    fetchCompletedTodos();
 };
 
-
+// JS STUFF
 document.getElementById('create-todo-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const todoInput = document.getElementById('todo-input');  // Get the input element
@@ -26,7 +26,7 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
   })
   .then(data => {
     console.log('Success adding', data.title, 'to db');
-    createNewTaskItem(data);
+    createTodo(data);
     resetInput(todoInput);
   })
   .catch((error) => {
@@ -34,32 +34,25 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
   });
 });
 
-
-function resetInput(inputElement) {
-    console.log('Clearing todo input element');
-    inputElement.placeholder = "ex: feed cat";
-    inputElement.value = '';
-}
-
-
-// Define the function to create a new task item
-function createNewTaskItem(task) {
-    // Create a new list item
-    console.log('Adding open todo to frontend:', task.title);
+function createTodo(todo) {
+    // todo: organize flow less random ternary operators
+    // Create a new item in frontend
+    console.log('Adding open todo to frontend:', todo.title);
     const li = document.createElement('li');
 
-    li.dataset.id = task._id;
+    li.dataset.id = todo._id;
 
     // Create a span to hold the todo title
     const span = document.createElement('span');
-    span.textContent = task.title;
+    span.textContent = todo.title;
+    span.style.textDecoration = todo.completed ? 'line-through' : 'none';
 
-    // Create a button to mark the todo as complete
-    const completeButton = document.createElement('button');
-    completeButton.textContent = 'Complete';
-    completeButton.addEventListener('click', function() {
-        // Logic to mark the todo as complete
-        completeTodo(li.dataset.id);
+    // Create a button to mark the todo
+    const actionButton = document.createElement('button');
+    actionButton.textContent = todo.completed ? 'Redo' : 'Complete';
+    actionButton.addEventListener('click', function() {
+        isComplete = todo.completed ? false : true;
+        updateTodo(li.dataset.id, isComplete);
     });
 
     // Create a button to delete the todo
@@ -72,49 +65,38 @@ function createNewTaskItem(task) {
 
     // Append the span and buttons to the list item
     li.appendChild(span);
-    li.appendChild(completeButton);
+    li.appendChild(actionButton);
     li.appendChild(deleteButton);
 
-    // Append the list item to the todo list
-    document.getElementById('todo-list').appendChild(li);
+    // Append the list item to the appropriate todo list
+    targetElement = todo.completed ? 'completed-list' : 'todo-list';
+    document.getElementById(targetElement).appendChild(li);
 }
 
-function redoTodo(todoId) {
+// HELPER FUNCTIONS
+function resetInput(inputElement) {
+    console.log('Clearing todo input element');
+    inputElement.placeholder = "ex: feed cat";
+    inputElement.value = '';
+}
+
+
+// ENDPOINT STUFF
+function updateTodo(todoId, markComplete) {
     fetch(`http://localhost:3001/todo/${todoId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            completed: false,
+            completed: markComplete,
         }),
     })
     .then(response => response.json())
     .then(updatedTask => {
         const li = document.querySelector(`[data-id="${todoId}"]`);
         const span = li.firstChild;
-        span.style.textDecoration = '';
-        // todo: move to active todos
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function completeTodo(todoId) {
-    fetch(`http://localhost:3001/todo/${todoId}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            completed: true,
-        }),
-    })
-    .then(response => response.json())
-    .then(updatedTask => {
-        const li = document.querySelector(`[data-id="${todoId}"]`);
-        const span = li.firstChild;
-        span.style.textDecoration = 'line-through';
-        // todo: move to completed?
+        span.style.textDecoration = markComplete ? 'line-through' : 'none';
     })
     .catch(error => console.error('Error:', error));
 }
@@ -137,61 +119,14 @@ function deleteTodo(todoId) {
 }
 
 function fetchTodos() {
-    fetch('http://localhost:3001/todos')
+    // fetch all items in db
+    fetch(`http://localhost:3001/todos`)
     .then(response => response.json())
     .then(todos => {
         todos.forEach(todo => {
-            createNewTaskItem(todo);
+            createTodo(todo);
         });
     })
     .catch(error => console.error('Error:', error));
 }
 
-function fetchCompletedTodos() {
-    fetch('http://localhost:3001/completed')
-        .then(response => response.json())
-        .then(completedTodos => {
-            completedTodos.forEach(todo => {
-                createCompletedTaskItem(todo);
-            });
-        })
-    .catch(error => console.error('Error:', error));
-}
-
-
-function createCompletedTaskItem(task) {
-    // Similar to your createNewTaskItem function, but for completed todos
-    const li = document.createElement('li');
-
-    const span = document.createElement('span');
-    li.dataset.id = task._id;
-    
-    span.textContent = task.title;
-    span.style.textDecoration = 'line-through';  // Since it's completed
-
-    // Create a button to mark the todo as incomplete
-    const redoButton = document.createElement('button');
-    redoButton.textContent = 'Redo';
-    redoButton.addEventListener('click', function() {
-        // Logic to mark the todo as complete
-        redoTodo(li.dataset.id);
-    }); 
-
-    // Create a button to delete the todo
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', function() {
-        // Logic to delete the todo
-        console.log(li.dataset.id);
-        deleteTodo(li.dataset.id);
-    });
-
-    // Append the span and buttons to the list item
-    li.appendChild(span);
-    li.appendChild(redoButton);
-    li.appendChild(deleteButton);
-
-    // ... rest of your code to create buttons, etc ...
-    const list = document.getElementById('completed-list');
-    list.appendChild(li);
-}
