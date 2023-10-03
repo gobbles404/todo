@@ -31,6 +31,7 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
   })
   .catch((error) => {
       console.error('Error:', error);
+      alert(error.message);
   });
 });
 
@@ -47,6 +48,7 @@ function createTodo(todo) {
     span.textContent = todo.title;
     span.style.textDecoration = todo.completed ? 'line-through' : 'none';
 
+    // try not to mix notations?
     let isComplete = todo.completed;
 
     // Create a button to mark the todo
@@ -55,10 +57,13 @@ function createTodo(todo) {
     // Create a button to delete the todo
     let deleteButton = createDeleteButton(li);
 
+    // determine the list that this will be appended to
+    targetElement = isComplete ? 'completed-list' : 'todo-list';
+
     // this feels like a great example of what I mean by 
     // having spent a lot of time with procedural programming
     // I know this isn't good but I don't know what this (should) look like
-    return appendTodo(li, span, actionButton, deleteButton, isComplete);
+    return appendTodo(li, span, actionButton, deleteButton, targetElement);
 }
 
 // HELPER FUNCTIONS
@@ -69,12 +74,12 @@ function resetInput(inputElement) {
 }
 
 function createActionButton(li, isComplete) {
-    // Create a button to mark the todo
+    // Create a button to update the todo
     const actionButton = document.createElement('button');
     actionButton.textContent = isComplete ? 'Redo' : 'Complete';
     actionButton.addEventListener('click', function() {
-        isComplete = isComplete ? false : true;
-        updateTodo(li.dataset.id, isComplete);
+        let toComplete = isComplete ? false : true;
+        updateTodo(li.dataset.id, toComplete);
         actionButton.textContent = isComplete ? 'Redo' : 'Complete';
     });
     return actionButton;
@@ -90,12 +95,10 @@ function createDeleteButton(li) {
     return deleteButton;
 }
 
-function appendTodo(li, span, actionButton, deleteButton, isComplete) {
+function appendTodo(li, span, actionButton, deleteButton, targetElement) {
     li.appendChild(span);
     li.appendChild(actionButton);
-    li.appendChild(deleteButton);
-
-    targetElement = isComplete ? 'completed-list' : 'todo-list';
+    li.appendChild(deleteButton);    
     return document.getElementById(targetElement).appendChild(li);
 }
 
@@ -115,6 +118,16 @@ function updateTodo(todoId, markComplete) {
     .then(updatedTask => {
         const li = document.querySelector(`[data-id="${todoId}"]`);
         const span = li.firstChild;
+        const actionButton = span.nextElementSibling;
+        const isComplete = (actionButton.textContent === 'Complete') ? true : false;
+        const newActionButton = createActionButton(li, isComplete);
+        li.replaceChild(newActionButton, actionButton);
+
+        targetListId = markComplete ? 'completed-list' : 'todo-list';
+        const targetList = document.getElementById(targetListId);
+        targetList.appendChild(li);
+
+        /// update strike through
         span.style.textDecoration = markComplete ? 'line-through' : 'none';
     })
     .catch(error => console.error('Error:', error));
