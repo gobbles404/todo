@@ -89,3 +89,7 @@ app.get('/todos', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+app.get('/', function(req, res){
+    res.send('Hello World');
+ });
