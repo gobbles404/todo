@@ -1,23 +1,140 @@
 * {
-  background-color: aqua;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  background-color: lightcoral;
 }
 
+h1, h2, h3 {
+  margin-bottom: 1rem;
+}
+
+h3 {
+  padding-bottom: 0.25rem;
+  border-bottom: 1px dashed gray;
+}
+
+h4 {
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border-bottom: 1px inset gray;
+}
+
+/* this contains all other containers */
 #page-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  padding: 1.25rem;
+  margin: auto;
+  max-width: 800px;
 }
 
-footer {
-  margin-top: auto;
+/* the two windows of the app */
+#todo-creator, #todo-viewer {
+  background-color: #f9f9f9;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* create stuff */
+#create-todo-form label {
+    display: block;
+    font-weight: bold;
+}
+
+#create-todo-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#create-todo-form input {
+  flex: 1;
+  margin: 0rem 0.8rem;
+}
+
+#create-todo-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+}
+
+#create-todo-form button {
+  display: block;
+  background-color: #008CBA;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#create-todo-form button:hover {
+  background-color: #005f5f;
+}
+
+label[for="todo-input"] {
+  align-self:center;
+  font-style: italic;
+  font-size: 0.9rem;
 }
 
 #columns-container {
   display: flex;
+  justify-content: space-between;
+}
+
+#active-todos, #completed-todos {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+#todo-list, #completed-list{
+  list-style-type: none;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid darkgray;
+  border-radius: 12px;
+  background-color: lightgray;
+}
+
+li span {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  width: 20%;
+}
+
+li button {
+  padding: 5px 10px;
+  border: 1px solid darkgray;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 0.5rem; /* space between buttons */
+}
+
+li button:hover {
+  background-color: #ddd; /* light grey background on hover */
+}
+
+footer {
+  position: fixed;  /* This will fix the position of the footer */
+  bottom: 0;  /* This will place it at the bottom of the page */
+  width: 100%;  /* This will ensure it stretches across the entire width of the page */
+  background-color: #333;  /* This sets the background color */
+  color: white;  /* This sets the text color */
+  text-align: center;  /* This centers the text */
+  padding: 1rem 0;  /* This adds some padding on the top and bottom */
 }

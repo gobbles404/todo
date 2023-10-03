@@ -32,6 +32,7 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
   .catch((error) => {
       console.error('Error:', error);
       alert(error.message);
+      resetInput(todoInput);
   });
 });
 
@@ -96,9 +97,13 @@ function createDeleteButton(li) {
 }
 
 function appendTodo(li, span, actionButton, deleteButton, targetElement) {
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'button-container';
+    buttonContainer.appendChild(actionButton);
+    buttonContainer.appendChild(deleteButton);
     li.appendChild(span);
-    li.appendChild(actionButton);
-    li.appendChild(deleteButton);    
+    li.appendChild(buttonContainer);
+    console.log(li)
     return document.getElementById(targetElement).appendChild(li);
 }
 
@@ -118,10 +123,11 @@ function updateTodo(todoId, markComplete) {
     .then(updatedTask => {
         const li = document.querySelector(`[data-id="${todoId}"]`);
         const span = li.firstChild;
-        const actionButton = span.nextElementSibling;
+        const actionButton = span.nextElementSibling.firstChild;
         const isComplete = (actionButton.textContent === 'Complete') ? true : false;
         const newActionButton = createActionButton(li, isComplete);
-        li.replaceChild(newActionButton, actionButton);
+        const buttonContainer = span.firstChild;
+        actionButton.parentElement.replaceChild(newActionButton, actionButton)
 
         targetListId = markComplete ? 'completed-list' : 'todo-list';
         const targetList = document.getElementById(targetListId);
