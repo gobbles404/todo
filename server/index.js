@@ -25,7 +25,7 @@ app.use(cors({
 }));
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on ${PORT}`);
 });
 
 app.post('/create', async (req, res) => {
