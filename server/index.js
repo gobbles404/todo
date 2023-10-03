@@ -9,11 +9,14 @@ const Todo = require('./models/todo');
 // feels like creating an instance of a class
 const app = express();
 const PORT = process.env.PORT || 3001;
+const path = require('path');
+
 
 connectDB();
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use(cors({
     origin: 'http://127.0.0.1:3000',
@@ -91,5 +94,5 @@ app.get('/todos', async (req, res) => {
 });
 
 app.get('/', function(req, res){
-    res.send('Hello World');
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
  });
