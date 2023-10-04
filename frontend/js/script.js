@@ -1,5 +1,10 @@
 // query backend for existing todos
 
+
+
+console.log(process.env.PORT);
+heroku_port = process.env.PORT;
+console.log(heroku_port);
 // config_backendURL = 'http://localhost:3001';
 config_backendURL = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com';
 console.log(config_backendURL);
@@ -163,7 +168,7 @@ function deleteTodo(todoId) {
 
 function fetchTodos() {
     // fetch all items in db
-    fetch(`${config_backendURL}/todos`)
+    fetch(`${config_backendURL}:${heroku_port}/todos`)
     .then(response => response.json())
     .then(todos => {
         todos.forEach(todo => {
