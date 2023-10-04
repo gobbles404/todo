@@ -1,18 +1,4 @@
 // query backend for existing todos
-
-
-let config_backendURL;
-
-fetch('/config')
-  .then(response => response.json())
-  .then(config => {
-    config_backendURL = config.backendURL;
-    console.log('Backend URL:', config_backendURL);
-  });
-
-// localdomain = 'http://localhost:';
-// herokudomain = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com';
-
 window.onload = () => {
     fetchTodos();
 };
@@ -23,7 +9,7 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
   const todoInput = document.getElementById('todo-input');  // Get the input element
 
   // ask Muhib about why localhost works and 127.0.0.1 returns CORS error
-  fetch(`${config_backendURL}/create`, {
+  fetch(`/create`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -52,7 +38,7 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
 
 function createTodo(todo) {
     // Create a new item in frontend
-    console.log('Adding open todo to frontend:', todo.title);
+    // console.log('Adding open todo to frontend:', todo.title);
     
     // Create list item to append to ul
     const li = document.createElement('li');
@@ -117,14 +103,14 @@ function appendTodo(li, span, actionButton, deleteButton, targetElement) {
     buttonContainer.appendChild(deleteButton);
     li.appendChild(span);
     li.appendChild(buttonContainer);
-    console.log(li)
+    // console.log(li)
     return document.getElementById(targetElement).appendChild(li);
 }
 
 
 // ENDPOINT STUFF
 function updateTodo(todoId, markComplete) {
-    fetch(`${config_backendURL}/todo/${todoId}`, {
+    fetch(`/todo/${todoId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -154,7 +140,7 @@ function updateTodo(todoId, markComplete) {
 }
 
 function deleteTodo(todoId) {
-    fetch(`${config_backendURL}/todo/${todoId}`, {
+    fetch(`/todo/${todoId}`, {
         method: 'DELETE',
     })
     .then(response => {

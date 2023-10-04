@@ -84,21 +84,19 @@ app.delete('/todo/:id', async (req, res) => {
 });
 
 app.get('/todos', async (req, res) => {
+    console.log('Received a request to /todos');
+    console.log('Headers:', JSON.stringify(req.headers, null, 2));
+    console.log('Query Parameters:', JSON.stringify(req.query, null, 2));
     try {
         const todos = await Todo.find({});
+        console.log('Database Query Result:', JSON.stringify(todos, null, 2));
         res.json(todos);
     } catch (error) {
-        console.error(error);
+        console.error('Error querying database:', error);
         res.status(500).send('Server error');
     }
 });
 
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
-
-app.get('/config', (req, res) => {
-    res.json({ 
-      backendURL: `https://muhib-todo-jayg-b069d533b1fb.herokuapp.com:${process.env.PORT || 3001}` 
-    });
 });
