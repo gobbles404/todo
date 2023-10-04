@@ -99,6 +99,6 @@ app.get('/', function(req, res){
 
 app.get('/config', (req, res) => {
     res.json({ 
-      backendURL: `https://muhib-todo-jayg-b069d533b1fb.herokuapp.com/:${process.env.PORT || 3001}` 
+      backendURL: `https://muhib-todo-jayg-b069d533b1fb.herokuapp.com:${process.env.PORT || 3001}` 
     });
 });

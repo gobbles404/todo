@@ -177,7 +177,8 @@ function deleteTodo(todoId) {
 
 function fetchTodos() {
     // fetch all items in db
-    fetch(`${config_backendURL}:${heroku_port}/todos`)
+    // fetch(`${config_backendURL}:${heroku_port}/todos`)
+    fetch(`${config_backendURL}/todos`)
     .then(response => response.json())
     .then(todos => {
         todos.forEach(todo => {
