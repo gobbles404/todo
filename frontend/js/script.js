@@ -10,13 +10,8 @@ fetch('/config')
     console.log('Backend URL:', config_backendURL);
   });
 
-
-
-// heroku_port = process.env.PORT;
-// console.log(heroku_port);
-// config_backendURL = 'http://localhost:3001';
-// config_backendURL = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com';
-// console.log(config_backendURL);
+// localdomain = 'http://localhost:';
+// herokudomain = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com';
 
 window.onload = () => {
     fetchTodos();
@@ -177,8 +172,7 @@ function deleteTodo(todoId) {
 
 function fetchTodos() {
     // fetch all items in db
-    // fetch(`${config_backendURL}:${heroku_port}/todos`)
-    fetch(`${config_backendURL}/todos`)
+    fetch(`/todos`)
     .then(response => response.json())
     .then(todos => {
         todos.forEach(todo => {
