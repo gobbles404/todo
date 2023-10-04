@@ -1,4 +1,9 @@
 // query backend for existing todos
+
+// config_backendURL = 'http://localhost:3001';
+config_backendURL = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com/';
+console.log(config_backendURL);
+
 window.onload = () => {
     fetchTodos();
 };
@@ -9,7 +14,7 @@ document.getElementById('create-todo-form').addEventListener('submit', function(
   const todoInput = document.getElementById('todo-input');  // Get the input element
 
   // ask Muhib about why localhost works and 127.0.0.1 returns CORS error
-  fetch(`http://localhost:3001/create`, {
+  fetch(`${config_backendURL}/create`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -110,7 +115,7 @@ function appendTodo(li, span, actionButton, deleteButton, targetElement) {
 
 // ENDPOINT STUFF
 function updateTodo(todoId, markComplete) {
-    fetch(`http://localhost:3001/todo/${todoId}`, {
+    fetch(`${config_backendURL}/todo/${todoId}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -140,7 +145,7 @@ function updateTodo(todoId, markComplete) {
 }
 
 function deleteTodo(todoId) {
-    fetch(`http://localhost:3001/todo/${todoId}`, {
+    fetch(`${config_backendURL}/todo/${todoId}`, {
         method: 'DELETE',
     })
     .then(response => {
@@ -158,7 +163,7 @@ function deleteTodo(todoId) {
 
 function fetchTodos() {
     // fetch all items in db
-    fetch(`http://localhost:3001/todos`)
+    fetch(`${config_backendURL}/todos`)
     .then(response => response.json())
     .then(todos => {
         todos.forEach(todo => {

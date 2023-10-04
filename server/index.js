@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.use(cors({
-    origin: 'http://127.0.0.1:3000',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     optionsSuccessStatus: 204,
 }));
