@@ -1,7 +1,7 @@
 // query backend for existing todos
 
 // config_backendURL = 'http://localhost:3001';
-config_backendURL = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com/';
+config_backendURL = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com';
 console.log(config_backendURL);
 
 window.onload = () => {
