@@ -1,10 +1,19 @@
 // query backend for existing todos
 
 
+let config_backendURL;
 
-console.log(process.env.PORT);
-heroku_port = process.env.PORT;
-console.log(heroku_port);
+fetch('/config')
+  .then(response => response.json())
+  .then(config => {
+    config_backendURL = config.backendURL;
+    // Now you can use config_backendURL in your other frontend code
+  });
+
+
+console.log(config_backendURL);
+// heroku_port = process.env.PORT;
+// console.log(heroku_port);
 // config_backendURL = 'http://localhost:3001';
 config_backendURL = 'https://muhib-todo-jayg-b069d533b1fb.herokuapp.com';
 console.log(config_backendURL);

@@ -96,3 +96,7 @@ app.get('/todos', async (req, res) => {
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
  });
+
+ app.get('/config', (req, res) => {
+    res.json({ backendURL: process.env.BACKEND_URL || 'http://localhost:3001' });
+  });
