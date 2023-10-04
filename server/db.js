@@ -1,18 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose is connected to', process.env.MONGODB_URI);
-});
-
-mongoose.connection.on('error', (err) => {
-  console.error('Mongoose connection error:', err.message);
-});
-
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose connection is disconnected');
-});
-
+// work on understanding of async and await
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
@@ -26,4 +15,5 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+// I guess we have to export functions?
+module.exports = connectDB
