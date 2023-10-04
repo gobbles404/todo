@@ -7,7 +7,7 @@ fetch('/config')
   .then(response => response.json())
   .then(config => {
     config_backendURL = config.backendURL;
-    // Now you can use config_backendURL in your other frontend code
+    console.log('Backend URL:', config_backendURL);
   });
 
 
