@@ -1,3 +1,6 @@
+console.log('This is a lint test');
+
+
 // query backend for existing todos
 window.onload = () => {
     fetchTodos();
@@ -59,7 +62,7 @@ function createTodo(todo) {
     let deleteButton = createDeleteButton(li);
 
     // determine the list that this will be appended to
-    targetElement = isComplete ? 'completed-list' : 'todo-list';
+    let targetElement = isComplete ? 'completed-list' : 'todo-list';
 
     // this feels like a great example of what I mean by 
     // having spent a lot of time with procedural programming
@@ -120,16 +123,15 @@ function updateTodo(todoId, markComplete) {
         }),
     })
     .then(response => response.json())
-    .then(updatedTask => {
+    .then(() => {
         const li = document.querySelector(`[data-id="${todoId}"]`);
         const span = li.firstChild;
         const actionButton = span.nextElementSibling.firstChild;
         const isComplete = (actionButton.textContent === 'Complete') ? true : false;
         const newActionButton = createActionButton(li, isComplete);
-        const buttonContainer = span.firstChild;
         actionButton.parentElement.replaceChild(newActionButton, actionButton)
 
-        targetListId = markComplete ? 'completed-list' : 'todo-list';
+        let targetListId = markComplete ? 'completed-list' : 'todo-list';
         const targetList = document.getElementById(targetListId);
         targetList.appendChild(li);
 
@@ -149,7 +151,7 @@ function deleteTodo(todoId) {
         }
         return response.json();
     })
-    .then(deletedTask => {
+    .then(() => {
         const li = document.querySelector(`[data-id="${todoId}"]`);
         li.remove();
     })
@@ -167,4 +169,3 @@ function fetchTodos() {
     })
     .catch(error => console.error('Error:', error));
 }
-
