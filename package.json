@@ -4,7 +4,7 @@
   "description": "1. Create a simple todo application     1. User can add, remove and mark a todo as complete     2. If marked as complete, the todo item will be strikethrough     3. The todo items should be stored in a backend     4. The frontend has to be done in vanilla Javascript (no library or frameworks). The backend is your choice. Should be a REST API 2. Project deadline is Sept 5th 3. After 5th, book a meeting with me for our first mock interview",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server/index.js",
     "dev": "nodemon server/index.js",
     "lint": "eslint . --ext .js"
@@ -40,6 +40,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.7.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
     "webpack": "^5.88.2",
