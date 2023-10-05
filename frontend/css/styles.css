@@ -93,8 +93,7 @@ li span {
   border-radius: 8px;
   padding: 0.8rem;
   display: block;
-  align-self: center;
-  margin-top: 0.8rem;
+  margin: 1rem 1rem 0rem 1rem;
   font-size: 1.2rem;
 }
 
@@ -122,4 +121,10 @@ li button {
 
 .icon {
   margin-left: 0.5rem;
+}
+
+
+#todo-list, #completed-list {
+  max-height: 70vh;
+  overflow-y: auto;
 }
