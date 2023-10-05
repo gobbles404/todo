@@ -27,10 +27,20 @@ function updateTodo(todoId, markComplete) {
     .catch((error) => console.error("Error:", error));
 }
 
+const checkmarkIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
+const redoIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M272 416c17.7 0 32-14.3 32-32s-14.3-32-32-32H160c-17.7 0-32-14.3-32-32V192h32c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l32 0 0 128c0 53 43 96 96 96H272zM304 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l112 0c17.7 0 32 14.3 32 32l0 128H416c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8l-32 0V192c0-53-43-96-96-96L304 96z"/></svg>';
 function createActionButton(li, isComplete) {
   // Create a button to update the todo
   const actionButton = document.createElement("button");
   actionButton.textContent = isComplete ? "Redo" : "Complete";
+
+  const iconDiv = document.createElement("div");
+  iconDiv.classList.add("icon");
+  iconDiv.innerHTML = isComplete ? redoIcon : checkmarkIcon;
+  actionButton.appendChild(iconDiv);
+
   actionButton.addEventListener("click", () => {
     const toComplete = !isComplete;
     updateTodo(li.dataset.id, toComplete);
@@ -56,9 +66,17 @@ function deleteTodo(todoId) {
     .catch((error) => console.error("Error:", error));
 }
 
+const deleteIcon =
+  '<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>';
 function createDeleteButton(li) {
   const deleteButton = document.createElement("button");
   deleteButton.textContent = "Delete";
+
+  const iconDiv = document.createElement("div");
+  iconDiv.classList.add("icon");
+  iconDiv.innerHTML = deleteIcon;
+  deleteButton.appendChild(iconDiv);
+
   deleteButton.addEventListener("click", () => {
     // Logic to delete the todo
     deleteTodo(li.dataset.id);

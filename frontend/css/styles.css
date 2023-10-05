@@ -105,6 +105,8 @@ li button {
   margin: 0.8rem;
   background-color: aqua;
   border-radius: 8px;
+  align-items: center;
+  display: flex;
 }
 
 #active-todos, #completed-todos {
@@ -116,4 +118,8 @@ li button {
 .button-container {
   display: flex;
   justify-content: space-evenly;
+}
+
+.icon {
+  margin-left: 0.5rem;
 }
