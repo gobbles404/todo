@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <div id="page-container">
-    <header>
+  <header class="header-footer">
+    <div class="content-container">
       <h1>ToDo App</h1>
-    </header>
+    </div>
+  </header>
+  <div class="main-container">
     <main>
-      <div id="todo-creator">
+      <div class="section-container" id="todo-creator">
         <h3>Create a ToDo</h3>
         <form id="create-todo-form">
           <label for="todo-input">Enter your ToDo:</label>
@@ -20,11 +22,11 @@
           <button type="submit">Create Todo</button>
         </form>
       </div>
-      <div id="todo-viewer">
-        <h3>Todo Viewer</h3>
-        <div id="columns-container">
+      <div class="section-container" id="todo-viewer">
+        <h3>Todo Viewer</h3>    
+        <div class="columns-container">
           <div id="active-todos">
-            <h4>Active ToDos</h4>
+            <h4 id="viewerName">Active ToDos</h4>
             <ul id="todo-list">
             </ul>
           </div>
@@ -38,7 +40,7 @@
     </main>
     <script src="js/script.js"></script>
   </div>
-  <footer>
+  <footer class="header-footer">
     &copy; 2023 Jay's ToDo App
   </footer>
 </body>

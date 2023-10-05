@@ -26,7 +26,7 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  //   console.log(`Server is running on ${PORT}`);
+  console.log(`Server is running on ${PORT}`);
 });
 
 app.post("/create", async (req, res) => {
